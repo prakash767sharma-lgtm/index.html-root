@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANKI SAFAR // TERMINAL</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Scanline Overlay -->
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+    
+    <!-- Boot Sequence -->
+    <div id="boot-sequence" class="boot-sequence">
+        <div class="boot-text">
+            <p>> INITIALIZING SANKI SAFAR PROTOCOL...</p>
+            <p>> LOADING NEURAL INTERFACE...</p>
+            <p>> ESTABLISHING SECURE CONNECTION...</p>
+            <p>> ACCESS GRANTED</p>
+            <p class="blink">_</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">◈</span>
+            <span class="brand-text">SANKI_SAFAR</span>
+            <span class="version">v2.0.77</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active" data-text="HOME">[HOME]</a>
+            <a href="blog.html" class="nav-link" data-text="BLOG">[BLOG]</a>
+            <a href="gallery.html" class="nav-link" data-text="GALLERY">[GALLERY]</a>
+            <a href="chat.html" class="nav-link" data-text="CHAT">[CHAT]</a>
+            <a href="about.html" class="nav-link" data-text="ABOUT">[ABOUT]</a>
+        </div>
+        <div class="nav-auth" id="nav-auth">
+            <a href="login.html" class="btn-terminal btn-sm">[LOGIN]</a>
+            <a href="signup.html" class="btn-terminal btn-sm btn-glow">[SIGN_UP]</a>
+        </div>
+        <div class="nav-user hidden" id="nav-user">
+            <span class="user-status">●</span>
+            <span class="username" id="nav-username">USER</span>
+            <button onclick="logout()" class="btn-terminal btn-sm">[LOGOUT]</button>
+        </div>
+        <button class="mobile-toggle" id="mobile-toggle">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html">[HOME]</a>
+        <a href="blog.html">[BLOG]</a>
+        <a href="gallery.html">[GALLERY]</a>
+        <a href="chat.html">[CHAT]</a>
+        <a href="about.html">[ABOUT]</a>
+        <a href="dashboard.html" id="mobile-dashboard" class="hidden">[DASHBOARD]</a>
+        <a href="login.html" id="mobile-login">[LOGIN]</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="terminal-header">
+                        <span class="terminal-btn close"></span>
+                        <span class="terminal-btn minimize"></span>
+                        <span class="terminal-btn maximize"></span>
+                        <span class="terminal-title">sanki_safar.exe</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p class="typewriter" id="hero-text">
+                            <span class="prompt">root@sanki-safar:~$</span> 
+                            <span class="command">init_travel_protocol</span>
+                        </p>
+                        <h1 class="glitch" data-text="WELCOME_TO_SANKI_SAFAR">
+                            WELCOME_TO_<br>SANKI_SAFAR
+                        </h1>
+                        <p class="hero-subtitle">
+                            > A digital archive of journeys through space and time.<br>
+                            > Stories that move. Memories that persist.<br>
+                            > Neural travel logs from across the globe.
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat">
+                                <span class="stat-label">STORIES</span>
+                                <span class="stat-value" id="story-count">000</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">DESTINATIONS</span>
+                                <span class="stat-value" id="dest-count">000</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">TRAVELERS</span>
+                                <span class="stat-value" id="traveler-count">001</span>
+                            </div>
+                        </div>
+                        <div class="hero-actions">
+                            <a href="blog.html" class="btn-terminal btn-lg btn-glow">
+                                <span class="btn-icon">▶</span>
+                                EXPLORE_STORIES
+                            </a>
+                            <a href="gallery.html" class="btn-terminal btn-lg">
+                                <span class="btn-icon">◉</span>
+                                VIEW_GALLERY
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hologram-container">
+                        <div class="hologram-ring"></div>
+                        <div class="hologram-ring"></div>
+                        <div class="hologram-ring"></div>
+                        <div class="globe-container">
+                            <div class="globe">
+                                <div class="globe-lines"></div>
+                            </div>
+                        </div>
+                        <div class="floating-elements">
+                            <span class="float-item" style="--delay:0s">✈</span>
+                            <span class="float-item" style="--delay:0.5s">◈</span>
+                            <span class="float-item" style="--delay:1s">⚡</span>
+                            <span class="float-item" style="--delay:1.5s">◉</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="section-header">
+                <span class="section-prompt">root@sanki-safar:~$</span>
+                <span class="section-command">ls -la /features</span>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-feature="stories">
+                    <div class="card-header">
+                        <span class="card-icon">📖</span>
+                        <span class="card-status">ONLINE</span>
+                    </div>
+                    <h3>TRAVEL_STORIES</h3>
+                    <p>Neural logs of adventures, discoveries, and moments from across the planetary surface.</p>
+                    <a href="blog.html" class="card-link">[ACCESS_DATABASE]</a>
+                </div>
+                <div class="feature-card" data-feature="gallery">
+                    <div class="card-header">
+                        <span class="card-icon">📷</span>
+                        <span class="card-status">ONLINE</span>
+                    </div>
+                    <h3>VISUAL_ARCHIVE</h3>
+                    <p>High-fidelity visual captures stored in the holographic memory banks.</p>
+                    <a href="gallery.html" class="card-link">[ACCESS_DATABASE]</a>
+                </div>
+                <div class="feature-card" data-feature="guides">
+                    <div class="card-header">
+                        <span class="card-icon">🗺</span>
+                        <span class="card-status">ONLINE</span>
+                    </div>
+                    <h3>NAVIGATION_GUIDES</h3>
+                    <p>Practical routing algorithms and survival protocols for fellow wanderers.</p>
+                    <a href="blog.html" class="card-link">[ACCESS_DATABASE]</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote Section -->
+        <section class="quote-section">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <span class="terminal-title">wisdom.dat</span>
+                </div>
+                <div class="terminal-body">
+                    <blockquote>
+                        "The world is a book and those who do not travel read only one page."
+                    </blockquote>
+                    <cite>— Saint Augustine // Historical_Archive</cite>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Connect -->
+        <section class="social-section">
+            <div class="section-header">
+                <span class="section-prompt">root@sanki-safar:~$</span>
+                <span class="section-command">connect --social</span>
+            </div>
+            <div class="social-grid">
+                <a href="https://youtube.com/@sankysafar?si=RwQwUUDb7l3BJfLJ" target="_blank" class="social-card youtube">
+                    <div class="social-icon">▶</div>
+                    <span>YOUTUBE</span>
+                    <div class="social-hover">@sankysafar</div>
+                </a>
+                <a href="https://www.facebook.com/share/1be1e7gRBE/" target="_blank" class="social-card facebook">
+                    <div class="social-icon">f</div>
+                    <span>FACEBOOK</span>
+                    <div class="social-hover">Sanki Safar</div>
+                </a>
+                <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=10tu88t3" target="_blank" class="social-card instagram">
+                    <div class="social-icon">📷</div>
+                    <span>INSTAGRAM</span>
+                    <div class="social-hover">@sankysafar</div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="brand-icon">◈</span>
+                <span>SANKI_SAFAR v2.0.77</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">[HOME]</a>
+                <a href="blog.html">[BLOG]</a>
+                <a href="gallery.html">[GALLERY]</a>
+                <a href="chat.html">[CHAT]</a>
+                <a href="about.html">[ABOUT]</a>
+            </div>
+            <div class="footer-status">
+                <span class="status-indicator">●</span>
+                <span>SYSTEM OPERATIONAL</span>
+                <span class="timestamp" id="footer-time"></span>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>> © 2026 SANKI_SAFAR // ALL_NEURAL_RIGHTS_RESERVED</p>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
