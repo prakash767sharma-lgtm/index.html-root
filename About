@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT // SANKI SAFAR</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">◈</span>
+            <span class="brand-text">SANKI_SAFAR</span>
+            <span class="version">v2.0.77</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">[HOME]</a>
+            <a href="blog.html" class="nav-link">[BLOG]</a>
+            <a href="gallery.html" class="nav-link">[GALLERY]</a>
+            <a href="chat.html" class="nav-link">[CHAT]</a>
+            <a href="about.html" class="nav-link active">[ABOUT]</a>
+        </div>
+        <div class="nav-auth" id="nav-auth">
+            <a href="login.html" class="btn-terminal btn-sm">[LOGIN]</a>
+        </div>
+        <div class="nav-user hidden" id="nav-user">
+            <span class="user-status">●</span>
+            <span class="username" id="nav-username">USER</span>
+            <button onclick="logout()" class="btn-terminal btn-sm">[LOGOUT]</button>
+        </div>
+    </nav>
+
+    <main class="about-container">
+        <section class="about-hero">
+            <div class="about-content">
+                <h1 class="glitch" data-text="ABOUT_SANKI_SAFAR">ABOUT_SANKI_SAFAR</h1>
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="terminal-title">origin.story</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p>> Sanki Safar is a digital archive of travel experiences.</p>
+                        <p>> Born from a passion for exploration and storytelling.</p>
+                        <p>> Documenting journeys across continents and cultures.</p>
+                        <p>> Connecting travelers through shared experiences.</p>
+                        <p class="blink">_</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mission-section">
+            <h2>OUR_MISSION</h2>
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon">📝</div>
+                    <h3>SHARE_STORIES</h3>
+                    <p>Authentic travel narratives that inspire and inform fellow wanderers.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">🌐</div>
+                    <h3>CONNECT_TRAVELERS</h3>
+                    <p>Building a community of explorers who learn from each other.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">🗺</div>
+                    <h3>PRESERVE_MEMORIES</h3>
+                    <p>Creating a lasting digital archive of places and moments.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="social-connect">
+            <h2>FOLLOW_THE_JOURNEY</h2>
+            <div class="social-grid-large">
+                <a href="https://youtube.com/@sankysafar?si=RwQwUUDb7l3BJfLJ" target="_blank" class="social-card-large youtube">
+                    <div class="social-content">
+                        <span class="social-icon-large">▶</span>
+                        <h3>YOUTUBE</h3>
+                        <p>@sankysafar</p>
+                        <span class="social-desc">Travel vlogs and visual stories</span>
+                    </div>
+                </a>
+                <a href="https://www.facebook.com/share/1be1e7gRBE/" target="_blank" class="social-card-large facebook">
+                    <div class="social-content">
+                        <span class="social-icon-large">f</span>
+                        <h3>FACEBOOK</h3>
+                        <p>Sanki Safar</p>
+                        <span class="social-desc">Community and updates</span>
+                    </div>
+                </a>
+                <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=10tu88t3" target="_blank" class="social-card-large instagram">
+                    <div class="social-content">
+                        <span class="social-icon-large">📷</span>
+                        <h3>INSTAGRAM</h3>
+                        <p>@sankysafar</p>
+                        <span class="social-desc">Daily travel moments</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="brand-icon">◈</span>
+                <span>SANKI_SAFAR v2.0.77</span>
+            </div>
+            <div class="footer-status">
+                <span class="status-indicator">●</span>
+                <span>SYSTEM OPERATIONAL</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
