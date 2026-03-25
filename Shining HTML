@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGNUP // SANKI SAFAR</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <div class="brand-mini">
+                    <span class="brand-icon">◈</span>
+                    <span>SANKI_SAFAR</span>
+                </div>
+                <h1>NEW_REGISTRATION</h1>
+                <p class="auth-subtitle">Initialize your neural profile</p>
+            </div>
+
+            <form id="signup-form" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">FIRST_NAME</label>
+                        <input type="text" id="firstName" name="firstName" required 
+                               placeholder="John"
+                               autocomplete="given-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">LAST_NAME</label>
+                        <input type="text" id="lastName" name="lastName" required 
+                               placeholder="Doe"
+                               autocomplete="family-name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">
+                        <span class="label-icon">👤</span>
+                        USERNAME
+                    </label>
+                    <input type="text" id="username" name="username" required 
+                           placeholder="traveler_77"
+                           autocomplete="username"
+                           pattern="[a-zA-Z0-9_]{3,20}"
+                           title="3-20 characters, alphanumeric and underscores only">
+                    <span class="input-hint">3-20 chars, alphanumeric + underscores</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <span class="label-icon">@</span>
+                        EMAIL_ADDRESS
+                    </label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="traveler@sankisafar.net"
+                           autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <span class="label-icon">🔒</span>
+                        PASSWORD
+                    </label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="••••••••"
+                           autocomplete="new-password"
+                           minlength="8">
+                    <div class="password-strength" id="password-strength">
+                        <div class="strength-bar"></div>
+                        <span class="strength-text">Enter password</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <span class="label-icon">🔒</span>
+                        CONFIRM_PASSWORD
+                    </label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required 
+                           placeholder="••••••••"
+                           autocomplete="new-password">
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">
+                            I agree to the <a href="#" onclick="showTerms()">[TERMS_OF_SERVICE]</a> 
+                            and <a href="#" onclick="showPrivacy()">[PRIVACY_POLICY]</a>
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-terminal btn-auth btn-glow">
+                    <span class="btn-text">INITIALIZE_ACCOUNT</span>
+                    <span class="btn-loading hidden">PROCESSING...</span>
+                </button>
+
+                <div class="auth-error hidden" id="auth-error">
+                    <span class="error-icon">⚠</span>
+                    <span class="error-message"></span>
+                </div>
+
+                <div class="auth-success hidden" id="auth-success">
+                    <span class="success-icon">✓</span>
+                    <span>Account created successfully! Redirecting...</span>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account?</p>
+                <a href="login.html" class="btn-terminal btn-outline">[LOGIN_INSTEAD]</a>
+            </div>
+        </div>
+
+        <div class="auth-visual">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <span class="terminal-btn close"></span>
+                    <span class="terminal-btn minimize"></span>
+                    <span class="terminal-btn maximize"></span>
+                    <span class="terminal-title">registration.log</span>
+                </div>
+                <div class="terminal-body" id="auth-terminal">
+                    <p>> Initializing new user protocol...</p>
+                    <p>> Awaiting registration data...</p>
+                    <p class="blink">_</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', handleSignup);
+        document.getElementById('password').addEventListener('input', checkPasswordStrength);
+    </script>
+</body>
+</html>
