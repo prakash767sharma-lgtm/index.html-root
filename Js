@@ -1,0 +1,432 @@
+/**
+ * SANKI SAFAR - AUTHENTICATION SYSTEM
+ * Handles login, signup, logout, and session management
+ * Uses LocalStorage for persistent user data
+ */
+
+// Initialize auth state on page load
+document.addEventListener('DOMContentLoaded', () => {
+    checkAuthState();
+    updateNavigation();
+});
+
+// Check if user is logged in
+function checkAuthState() {
+    const currentUser = localStorage.getItem('currentUser');
+    const sessionToken = sessionStorage.getItem('sessionToken');
+    
+    if (currentUser && sessionToken) {
+        const user = JSON.parse(currentUser);
+        return { isLoggedIn: true, user: user };
+    }
+    return { isLoggedIn: false, user: null };
+}
+
+// Update navigation based on auth state
+function updateNavigation() {
+    const authState = checkAuthState();
+    const navAuth = document.getElementById('nav-auth');
+    const navUser = document.getElementById('nav-user');
+    const mobileLogin = document.getElementById('mobile-login');
+    const mobileDashboard = document.getElementById('mobile-dashboard');
+    
+    if (authState.isLoggedIn) {
+        // Show user menu, hide login buttons
+        if (navAuth) navAuth.classList.add('hidden');
+        if (navUser) {
+            navUser.classList.remove('hidden');
+            document.getElementById('nav-username').textContent = authState.user.username;
+        }
+        if (mobileLogin) mobileLogin.classList.add('hidden');
+        if (mobileDashboard) mobileDashboard.classList.remove('hidden');
+        
+        // Redirect from auth pages if logged in
+        const authPages = ['login.html', 'signup.html'];
+        if (authPages.some(page => window.location.pathname.includes(page))) {
+            window.location.href = 'dashboard.html';
+        }
+    } else {
+        // Show login buttons, hide user menu
+        if (navAuth) navAuth.classList.remove('hidden');
+        if (navUser) navUser.classList.add('hidden');
+        if (mobileLogin) mobileLogin.classList.remove('hidden');
+        if (mobileDashboard) mobileDashboard.classList.add('hidden');
+        
+        // Protect dashboard and other auth-required pages
+        const protectedPages = ['dashboard.html'];
+        if (protectedPages.some(page => window.location.pathname.includes(page))) {
+            window.location.href = 'login.html';
+        }
+    }
+}
+
+// Handle Login
+function handleLogin(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember')?.checked || false;
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    const errorDiv = document.getElementById('auth-error');
+    
+    // Show loading state
+    btnText.classList.add('hidden');
+    btnLoading.classList.remove('hidden');
+    submitBtn.disabled = true;
+    
+    // Simulate network delay for realism
+    setTimeout(() => {
+        // Get users from localStorage
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const user = users.find(u => u.email === email && u.password === hashPassword(password));
+        
+        if (user) {
+            // Create session
+            const sessionToken = generateToken();
+            const sessionData = {
+                userId: user.id,
+                username: user.username,
+                email: user.email,
+                token: sessionToken,
+                loginTime: new Date().toISOString()
+            };
+            
+            // Store session
+            sessionStorage.setItem('sessionToken', sessionToken);
+            localStorage.setItem('currentUser', JSON.stringify(sessionData));
+            
+            // Update "Remember me" preference
+            if (remember) {
+                localStorage.setItem('rememberUser', email);
+            } else {
+                localStorage.removeItem('rememberUser');
+            }
+            
+            // Update user stats
+            updateUserStats(user.id, 'lastLogin', new Date().toISOString());
+            
+            // Redirect to dashboard
+            showSuccess('Login successful! Redirecting...');
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        } else {
+            // Show error
+            showError('Invalid email or password. Please try again.');
+            btnText.classList.remove('hidden');
+            btnLoading.classList.add('hidden');
+            submitBtn.disabled = false;
+        }
+    }, 800);
+}
+
+// Handle Signup
+function handleSignup(e) {
+    e.preventDefault();
+    
+    const formData = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        username: document.getElementById('username').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirmPassword').value
+    };
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    
+    // Validation
+    if (!validateSignup(formData)) return;
+    
+    // Show loading
+    btnText.classList.add('hidden');
+    btnLoading.classList.remove('hidden');
+    submitBtn.disabled = true;
+    
+    setTimeout(() => {
+        // Check if email or username exists
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        
+        if (users.some(u => u.email === formData.email)) {
+            showError('Email already registered. Please login instead.');
+            resetButton(submitBtn);
+            return;
+        }
+        
+        if (users.some(u => u.username === formData.username)) {
+            showError('Username already taken. Please choose another.');
+            resetButton(submitBtn);
+            return;
+        }
+        
+        // Create new user
+        const newUser = {
+            id: generateId(),
+            ...formData,
+            password: hashPassword(formData.password),
+            createdAt: new Date().toISOString(),
+            avatar: null,
+            bio: '',
+            location: '',
+            website: '',
+            stats: {
+                posts: 0,
+                images: 0,
+                views: 0,
+                likes: 0
+            }
+        };
+        
+        // Save user
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        // Create welcome notification
+        createNotification(newUser.id, 'Welcome to Sanki Safar! Start by creating your first travel story.');
+        
+        // Show success
+        document.getElementById('auth-success').classList.remove('hidden');
+        
+        // Auto login after signup
+        setTimeout(() => {
+            const sessionToken = generateToken();
+            const sessionData = {
+                userId: newUser.id,
+                username: newUser.username,
+                email: newUser.email,
+                token: sessionToken,
+                loginTime: new Date().toISOString()
+            };
+            
+            sessionStorage.setItem('sessionToken', sessionToken);
+            localStorage.setItem('currentUser', JSON.stringify(sessionData));
+            
+            window.location.href = 'dashboard.html';
+        }, 1500);
+        
+    }, 1000);
+}
+
+// Validate signup form
+function validateSignup(data) {
+    // Check required fields
+    if (!data.firstName || !data.lastName || !data.username || !data.email || !data.password) {
+        showError('All fields are required.');
+        return false;
+    }
+    
+    // Validate username format
+    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+    if (!usernameRegex.test(data.username)) {
+        showError('Username must be 3-20 characters, alphanumeric and underscores only.');
+        return false;
+    }
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+        showError('Please enter a valid email address.');
+        return false;
+    }
+    
+    // Validate password strength
+    if (data.password.length < 8) {
+        showError('Password must be at least 8 characters long.');
+        return false;
+    }
+    
+    // Check password match
+    if (data.password !== data.confirmPassword) {
+        showError('Passwords do not match.');
+        return false;
+    }
+    
+    // Check terms agreement
+    if (!document.getElementById('terms').checked) {
+        showError('You must agree to the Terms of Service.');
+        return false;
+    }
+    
+    return true;
+}
+
+// Check password strength
+function checkPasswordStrength() {
+    const password = document.getElementById('password').value;
+    const strengthBar = document.querySelector('.strength-bar');
+    const strengthText = document.querySelector('.strength-text');
+    
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+    if (password.match(/[0-9]/)) strength++;
+    if (password.match(/[^a-zA-Z0-9]/)) strength++;
+    
+    const colors = ['#ff006e', '#ffb700', '#00d4ff', '#00ff9d'];
+    const texts = ['Weak', 'Fair', 'Good', 'Strong'];
+    
+    strengthBar.style.width = `${(strength / 4) * 100}%`;
+    strengthBar.style.background = colors[strength - 1] || '#ff006e';
+    strengthText.textContent = texts[strength - 1] || 'Too short';
+    strengthText.style.color = colors[strength - 1] || '#ff006e';
+}
+
+// Logout function
+function logout() {
+    // Clear session
+    sessionStorage.removeItem('sessionToken');
+    localStorage.removeItem('currentUser');
+    
+    // Show logout message
+    showNotification('Logged out successfully', 'info');
+    
+    // Redirect to home
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 500);
+}
+
+// Utility functions
+function hashPassword(password) {
+    // Simple hash for demo - in production use bcrypt or similar
+    let hash = 0;
+    for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+    return hash.toString();
+}
+
+function generateToken() {
+    return 'token_' + Math.random().toString(36).substr(2) + Date.now();
+}
+
+function generateId() {
+    return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+function showError(message) {
+    const errorDiv = document.getElementById('auth-error');
+    if (errorDiv) {
+        errorDiv.querySelector('.error-message').textContent = message;
+        errorDiv.classList.remove('hidden');
+        setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+    }
+}
+
+function showSuccess(message) {
+    // Create temporary success notification
+    const notification = document.createElement('div');
+    notification.className = 'notification success';
+    notification.innerHTML = `<span class="success-icon">✓</span> ${message}`;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.remove(), 3000);
+}
+
+function resetButton(btn) {
+    const btnText = btn.querySelector('.btn-text');
+    const btnLoading = btn.querySelector('.btn-loading');
+    if (btnText) btnText.classList.remove('hidden');
+    if (btnLoading) btnLoading.classList.add('hidden');
+    btn.disabled = false;
+}
+
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    field.type = field.type === 'password' ? 'text' : 'password';
+}
+
+function showForgotPassword() {
+    document.getElementById('forgot-modal').classList.remove('hidden');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.add('hidden');
+}
+
+function sendResetLink() {
+    const email = document.getElementById('reset-email').value;
+    if (!email) {
+        showError('Please enter your email address.');
+        return;
+    }
+    
+    // Simulate sending reset link
+    showSuccess('Password reset link sent to your email!');
+    closeModal('forgot-modal');
+}
+
+function showTerms() {
+    alert('Terms of Service: By using Sanki Safar, you agree to share your travel stories responsibly and respect the community guidelines.');
+}
+
+function showPrivacy() {
+    alert('Privacy Policy: We store your data locally on your device. We do not share your information with third parties.');
+}
+
+// Update user statistics
+function updateUserStats(userId, key, value) {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const userIndex = users.findIndex(u => u.id === userId);
+    
+    if (userIndex !== -1) {
+        if (!users[userIndex].stats) users[userIndex].stats = {};
+        users[userIndex].stats[key] = value;
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+}
+
+// Create notification for user
+function createNotification(userId, message) {
+    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    notifications.push({
+        userId,
+        message,
+        createdAt: new Date().toISOString(),
+        read: false
+    });
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+}
+
+// Show notification toast
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <span class="notification-icon">${type === 'success' ? '✓' : type === 'error' ? '⚠' : 'ℹ'}</span>
+        <span class="notification-message">${message}</span>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Get current user data
+function getCurrentUser() {
+    const currentUser = localStorage.getItem('currentUser');
+    return currentUser ? JSON.parse(currentUser) : null;
+}
+
+// Check if logged in (for protected functions)
+function requireAuth() {
+    const authState = checkAuthState();
+    if (!authState.isLoggedIn) {
+        window.location.href = 'login.html';
+        return null;
+    }
+    return authState.user;
+}
