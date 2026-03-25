@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN // SANKI SAFAR</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <div class="brand-mini">
+                    <span class="brand-icon">◈</span>
+                    <span>SANKI_SAFAR</span>
+                </div>
+                <h1>SECURE_LOGIN</h1>
+                <p class="auth-subtitle">Enter your credentials to access the neural network</p>
+            </div>
+
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="email">
+                        <span class="label-icon">@</span>
+                        EMAIL_ADDRESS
+                    </label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="traveler@sankisafar.net"
+                           autocomplete="email">
+                    <span class="input-line"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <span class="label-icon">🔒</span>
+                        PASSWORD
+                    </label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="••••••••"
+                           autocomplete="current-password">
+                    <span class="input-line"></span>
+                    <button type="button" class="toggle-password" onclick="togglePassword('password')">
+                        👁
+                    </button>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="remember" name="remember">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">REMEMBER_SESSION</span>
+                    </label>
+                    <a href="#" class="forgot-link" onclick="showForgotPassword()">[FORGOT_PASSWORD?]</a>
+                </div>
+
+                <button type="submit" class="btn-terminal btn-auth btn-glow">
+                    <span class="btn-text">AUTHENTICATE</span>
+                    <span class="btn-loading hidden">PROCESSING...</span>
+                </button>
+
+                <div class="auth-error hidden" id="auth-error">
+                    <span class="error-icon">⚠</span>
+                    <span class="error-message"></span>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account?</p>
+                <a href="signup.html" class="btn-terminal btn-outline">[CREATE_ACCOUNT]</a>
+            </div>
+
+            <div class="auth-decoration">
+                <div class="decoration-line"></div>
+                <div class="decoration-line"></div>
+                <div class="decoration-line"></div>
+            </div>
+        </div>
+
+        <div class="auth-visual">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <span class="terminal-btn close"></span>
+                    <span class="terminal-btn minimize"></span>
+                    <span class="terminal-btn maximize"></span>
+                    <span class="terminal-title">auth.log</span>
+                </div>
+                <div class="terminal-body" id="auth-terminal">
+                    <p>> Initializing secure handshake...</p>
+                    <p>> Awaiting user credentials...</p>
+                    <p class="blink">_</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal hidden" id="forgot-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>RESET_PASSWORD</h3>
+                <button class="modal-close" onclick="closeModal('forgot-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Enter your email to receive reset instructions:</p>
+                <input type="email" id="reset-email" placeholder="traveler@sankisafar.net">
+                <button onclick="sendResetLink()" class="btn-terminal btn-glow">SEND_RESET_LINK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', handleLogin);
+        
+        // Terminal animation
+        const terminalLines = [
+            '> Initializing secure handshake...',
+            '> Awaiting user credentials...',
+            '> Ready for authentication...'
+        ];
+        
+        let lineIndex = 0;
+        setInterval(() => {
+            const terminal = document.getElementById('auth-terminal');
+            if (lineIndex < terminalLines.length) {
+                terminal.innerHTML += `<p>${terminalLines[lineIndex]}</p>`;
+                lineIndex++;
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
