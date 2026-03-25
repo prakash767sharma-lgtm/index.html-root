@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOG // SANKI SAFAR</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">◈</span>
+            <span class="brand-text">SANKI_SAFAR</span>
+            <span class="version">v2.0.77</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">[HOME]</a>
+            <a href="blog.html" class="nav-link active">[BLOG]</a>
+            <a href="gallery.html" class="nav-link">[GALLERY]</a>
+            <a href="chat.html" class="nav-link">[CHAT]</a>
+            <a href="about.html" class="nav-link">[ABOUT]</a>
+        </div>
+        <div class="nav-auth" id="nav-auth">
+            <a href="login.html" class="btn-terminal btn-sm">[LOGIN]</a>
+        </div>
+        <div class="nav-user hidden" id="nav-user">
+            <span class="user-status">●</span>
+            <span class="username" id="nav-username">USER</span>
+            <button onclick="logout()" class="btn-terminal btn-sm">[LOGOUT]</button>
+        </div>
+    </nav>
+
+    <main class="blog-container">
+        <header class="blog-header">
+            <h1 class="glitch" data-text="TRAVEL_LOGS">TRAVEL_LOGS</h1>
+            <p class="blog-subtitle">> Neural archives of journeys across the planetary surface</p>
+            
+            <div class="blog-filters">
+                <button class="filter-btn active" data-filter="all">[ALL]</button>
+                <button class="filter-btn" data-filter="travel">[STORIES]</button>
+                <button class="filter-btn" data-filter="guide">[GUIDES]</button>
+                <button class="filter-btn" data-filter="photo">[PHOTO_ESSAYS]</button>
+                <button class="filter-btn" data-filter="tips">[TIPS]</button>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="blog-search" placeholder="Search logs...">
+                <button onclick="searchPosts()">🔍</button>
+            </div>
+        </header>
+
+        <div class="blog-grid" id="blog-grid">
+            <!-- Blog posts loaded dynamically -->
+        </div>
+
+        <div class="pagination">
+            <button onclick="prevPage()" class="btn-terminal" id="prev-btn">[PREV]</button>
+            <span class="page-info" id="page-info">Page 1 of 1</span>
+            <button onclick="nextPage()" class="btn-terminal" id="next-btn">[NEXT]</button>
+        </div>
+    </main>
+
+    <!-- Post Modal -->
+    <div class="modal hidden" id="post-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="modal-title">Post Title</h3>
+                <button class="modal-close" onclick="closePostModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <article id="modal-content" class="post-article"></article>
+            </div>
+            <div class="modal-footer">
+                <button onclick="likePost()" class="btn-terminal" id="like-btn">
+                    <span>❤</span> <span id="like-count">0</span>
+                </button>
+                <button onclick="sharePost()" class="btn-terminal">[SHARE]</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/blog.js"></script>
+</body>
+</html>
