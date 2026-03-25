@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAT // SANKI SAFAR</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">◈</span>
+            <span class="brand-text">SANKI_SAFAR</span>
+            <span class="version">v2.0.77</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">[HOME]</a>
+            <a href="blog.html" class="nav-link">[BLOG]</a>
+            <a href="gallery.html" class="nav-link">[GALLERY]</a>
+            <a href="chat.html" class="nav-link active">[CHAT]</a>
+            <a href="about.html" class="nav-link">[ABOUT]</a>
+        </div>
+        <div class="nav-auth" id="nav-auth">
+            <a href="login.html" class="btn-terminal btn-sm">[LOGIN]</a>
+        </div>
+        <div class="nav-user hidden" id="nav-user">
+            <span class="user-status">●</span>
+            <span class="username" id="nav-username">USER</span>
+            <button onclick="logout()" class="btn-terminal btn-sm">[LOGOUT]</button>
+        </div>
+    </nav>
+
+    <main class="chat-container">
+        <div class="chat-sidebar">
+            <div class="chat-tabs">
+                <button class="chat-tab active" onclick="switchTab('community')">COMMUNITY</button>
+                <button class="chat-tab" onclick="switchTab('ai')">AI_ASSISTANT</button>
+            </div>
+            
+            <div class="online-users" id="online-users">
+                <h4>ONLINE_TRAVELERS</h4>
+                <div class="users-list" id="users-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <!-- Community Chat -->
+            <div class="chat-panel active" id="community-panel">
+                <div class="chat-header">
+                    <h3>#general_travel</h3>
+                    <span class="user-count" id="user-count">0 travelers online</span>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="system-message">
+                        <span class="timestamp">[SYSTEM]</span>
+                        Welcome to Sanki Safar Community Chat. Be respectful and share your travel stories!
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <div class="chat-toolbar">
+                        <button onclick="insertEmoji('😊')">😊</button>
+                        <button onclick="insertEmoji('🌍')">🌍</button>
+                        <button onclick="insertEmoji('✈')">✈</button>
+                        <button onclick="insertEmoji('📷')">📷</button>
+                    </div>
+                    <form id="chat-form" class="chat-form">
+                        <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+                        <button type="submit" class="btn-send">➤</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- AI Chat Panel -->
+            <div class="chat-panel" id="ai-panel">
+                <div class="chat-header">
+                    <h3>🤖 TRAVEL_AI</h3>
+                    <span class="ai-status">● Ready</span>
+                </div>
+                
+                <div class="chat-messages" id="ai-messages">
+                    <div class="ai-message">
+                        <div class="message-avatar ai-avatar">AI</div>
+                        <div class="message-content">
+                            <p>Hello! I'm your Travel AI assistant. I can help you with:</p>
+                            <ul>
+                                <li>Travel recommendations</li>
+                                <li>Itinerary planning</li>
+                                <li>Local tips and customs</li>
+                                <li>Packing suggestions</li>
+                            </ul>
+                            <p>What would you like to know?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <form id="ai-form" class="chat-form">
+                        <input type="text" id="ai-input" placeholder="Ask me anything about travel...">
+                        <button type="submit" class="btn-send btn-ai">➤</button>
+                    </form>
+                    <p class="ai-disclaimer">AI responses are generated. Verify important information.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>
