@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASHBOARD // SANKI SAFAR</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">◈</span>
+            <span class="brand-text">SANKI_SAFAR</span>
+            <span class="version">v2.0.77</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">[HOME]</a>
+            <a href="blog.html" class="nav-link">[BLOG]</a>
+            <a href="gallery.html" class="nav-link">[GALLERY]</a>
+            <a href="chat.html" class="nav-link">[CHAT]</a>
+            <a href="dashboard.html" class="nav-link active">[DASHBOARD]</a>
+        </div>
+        <div class="nav-user" id="nav-user">
+            <span class="user-status">●</span>
+            <span class="username" id="nav-username">USER</span>
+            <button onclick="logout()" class="btn-terminal btn-sm">[LOGOUT]</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="user-profile-card">
+                <div class="avatar-container">
+                    <div class="avatar" id="user-avatar">
+                        <span id="avatar-initials">U</span>
+                    </div>
+                    <div class="avatar-upload" onclick="document.getElementById('avatar-input').click()">
+                        <span>📷</span>
+                    </div>
+                    <input type="file" id="avatar-input" accept="image/*" hidden onchange="updateAvatar(this)">
+                </div>
+                <h3 id="sidebar-username">Username</h3>
+                <p id="sidebar-email">email@example.com</p>
+                <div class="user-stats">
+                    <div class="user-stat">
+                        <span class="stat-value" id="user-posts">0</span>
+                        <span class="stat-label">POSTS</span>
+                    </div>
+                    <div class="user-stat">
+                        <span class="stat-value" id="user-images">0</span>
+                        <span class="stat-label">IMAGES</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="dashboard-nav">
+                <a href="#overview" class="dash-nav-item active" onclick="showSection('overview')">
+                    <span class="nav-icon">📊</span>
+                    OVERVIEW
+                </a>
+                <a href="#posts" class="dash-nav-item" onclick="showSection('posts')">
+                    <span class="nav-icon">📝</span>
+                    MY_POSTS
+                </a>
+                <a href="#new-post" class="dash-nav-item" onclick="showSection('new-post')">
+                    <span class="nav-icon">✚</span>
+                    NEW_POST
+                </a>
+                <a href="#gallery" class="dash-nav-item" onclick="showSection('gallery')">
+                    <span class="nav-icon">🖼</span>
+                    MY_GALLERY
+                </a>
+                <a href="#upload" class="dash-nav-item" onclick="showSection('upload')">
+                    <span class="nav-icon">☁</span>
+                    UPLOAD
+                </a>
+                <a href="#settings" class="dash-nav-item" onclick="showSection('settings')">
+                    <span class="nav-icon">⚙</span>
+                    SETTINGS
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section active">
+                <div class="section-header">
+                    <h2>DASHBOARD_OVERVIEW</h2>
+                    <span class="live-indicator">● LIVE</span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="total-posts">0</span>
+                            <span class="stat-label">Total Posts</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🖼</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="total-images">0</span>
+                            <span class="stat-label">Images Uploaded</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👁</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="total-views">0</span>
+                            <span class="stat-label">Total Views</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">❤</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="total-likes">0</span>
+                            <span class="stat-label">Total Likes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card recent-activity">
+                        <h3>RECENT_ACTIVITY</h3>
+                        <div class="activity-list" id="activity-list">
+                            <p class="empty-state">No recent activity</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card quick-actions">
+                        <h3>QUICK_ACTIONS</h3>
+                        <div class="action-buttons">
+                            <button onclick="showSection('new-post')" class="btn-action">
+                                <span>✚</span>
+                                Write New Story
+                            </button>
+                            <button onclick="showSection('upload')" class="btn-action">
+                                <span>☁</span>
+                                Upload Images
+                            </button>
+                            <button onclick="location.href='chat.html'" class="btn-action">
+                                <span>💬</span>
+                                Open Chat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Posts Section -->
+            <section id="posts" class="dashboard-section">
+                <div class="section-header">
+                    <h2>MY_STORIES</h2>
+                    <button onclick="showSection('new-post')" class="btn-terminal btn-sm btn-glow">
+                        [+ NEW_POST]
+                    </button>
+                </div>
+                <div class="posts-grid" id="user-posts-grid">
+                    <!-- Posts loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- New Post Section -->
+            <section id="new-post" class="dashboard-section">
+                <div class="section-header">
+                    <h2>CREATE_NEW_STORY</h2>
+                </div>
+                <form id="post-form" class="post-form">
+                    <div class="form-group">
+                        <label for="post-title">STORY_TITLE</label>
+                        <input type="text" id="post-title" required placeholder="Enter your story title...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="post-category">CATEGORY</label>
+                        <select id="post-category" required>
+                            <option value="">Select category...</option>
+                            <option value="travel">Travel Story</option>
+                            <option value="guide">Travel Guide</option>
+                            <option value="photo">Photo Essay</option>
+                            <option value="tips">Tips & Tricks</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-excerpt">SHORT_DESCRIPTION</label>
+                        <input type="text" id="post-excerpt" maxlength="200" 
+                               placeholder="Brief description of your story...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-content">FULL_STORY</label>
+                        <textarea id="post-content" rows="15" required 
+                                  placeholder="Write your story here... Markdown supported"></textarea>
+                        <div class="editor-toolbar">
+                            <button type="button" onclick="insertMarkdown('**', '**')">Bold</button>
+                            <button type="button" onclick="insertMarkdown('*', '*')">Italic</button>
+                            <button type="button" onclick="insertMarkdown('# ', '')">H1</button>
+                            <button type="button" onclick="insertMarkdown('## ', '')">H2</button>
+                            <button type="button" onclick="insertMarkdown('[', '](url)')">Link</button>
+                            <button type="button" onclick="insertMarkdown('![alt](', ')')">Image</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-cover">COVER_IMAGE</label>
+                        <div class="image-upload-zone" id="cover-upload-zone">
+                            <input type="file" id="post-cover" accept="image/*" onchange="previewCover(this)">
+                            <div class="upload-placeholder">
+                                <span class="upload-icon">☁</span>
+                                <p>Drag & drop or click to upload cover image</p>
+                            </div>
+                            <img id="cover-preview" class="hidden">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" onclick="saveDraft()" class="btn-terminal btn-outline">SAVE_DRAFT</button>
+                        <button type="submit" class="btn-terminal btn-glow">PUBLISH_STORY</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Gallery Section -->
+            <section id="gallery" class="dashboard-section">
+                <div class="section-header">
+                    <h2>MY_GALLERY</h2>
+                </div>
+                <div class="gallery-grid" id="user-gallery-grid">
+                    <!-- Images loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section id="upload" class="dashboard-section">
+                <div class="section-header">
+                    <h2>UPLOAD_IMAGES</h2>
+                </div>
+                <div class="upload-container">
+                    <div class="upload-zone" id="main-upload-zone">
+                        <input type="file" id="bulk-upload" multiple accept="image/*" onchange="handleBulkUpload(this)">
+                        <div class="upload-content">
+                            <span class="upload-icon-large">☁</span>
+                            <h3>DROP_FILES_HERE</h3>
+                            <p>or click to browse</p>
+                            <span class="upload-formats">Supports: JPG, PNG, GIF, WebP (Max 10MB each)</span>
+                        </div>
+                    </div>
+                    <div class="upload-queue" id="upload-queue"></div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="dashboard-section">
+                <div class="section-header">
+                    <h2>ACCOUNT_SETTINGS</h2>
+                </div>
+                <form id="settings-form" class="settings-form">
+                    <div class="form-group">
+                        <label>DISPLAY_NAME</label>
+                        <input type="text" id="settings-display-name">
+                    </div>
+                    <div class="form-group">
+                        <label>BIO</label>
+                        <textarea id="settings-bio" rows="3" maxlength="500"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>LOCATION</label>
+                        <input type="text" id="settings-location" placeholder="City, Country">
+                    </div>
+                    <div class="form-group">
+                        <label>WEBSITE</label>
+                        <input type="url" id="settings-website" placeholder="https://yourwebsite.com">
+                    </div>
+                    <button type="submit" class="btn-terminal btn-glow">SAVE_CHANGES</button>
+                </form>
+
+                <div class="danger-zone">
+                    <h3>⚠ DANGER_ZONE</h3>
+                    <button onclick="deleteAccount()" class="btn-danger">DELETE_ACCOUNT</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
