@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GALLERY // SANKI SAFAR</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">◈</span>
+            <span class="brand-text">SANKI_SAFAR</span>
+            <span class="version">v2.0.77</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">[HOME]</a>
+            <a href="blog.html" class="nav-link">[BLOG]</a>
+            <a href="gallery.html" class="nav-link active">[GALLERY]</a>
+            <a href="chat.html" class="nav-link">[CHAT]</a>
+            <a href="about.html" class="nav-link">[ABOUT]</a>
+        </div>
+        <div class="nav-auth" id="nav-auth">
+            <a href="login.html" class="btn-terminal btn-sm">[LOGIN]</a>
+        </div>
+        <div class="nav-user hidden" id="nav-user">
+            <span class="user-status">●</span>
+            <span class="username" id="nav-username">USER</span>
+            <button onclick="logout()" class="btn-terminal btn-sm">[LOGOUT]</button>
+        </div>
+    </nav>
+
+    <main class="gallery-container">
+        <header class="gallery-header">
+            <h1 class="glitch" data-text="VISUAL_ARCHIVE">VISUAL_ARCHIVE</h1>
+            <p class="gallery-subtitle">> Holographic memory banks of captured moments</p>
+        </header>
+
+        <div class="gallery-filters">
+            <button class="filter-btn active" data-filter="all">[ALL]</button>
+            <button class="filter-btn" data-filter="nature">[NATURE]</button>
+            <button class="filter-btn" data-filter="urban">[URBAN]</button>
+            <button class="filter-btn" data-filter="people">[PEOPLE]</button>
+            <button class="filter-btn" data-filter="food">[CULTURE]</button>
+        </div>
+
+        <div class="masonry-grid" id="gallery-grid">
+            <!-- Images loaded dynamically -->
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox hidden" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <button class="lightbox-nav prev" onclick="prevImage()">‹</button>
+        <img id="lightbox-img" src="" alt="">
+        <div class="lightbox-info">
+            <h3 id="lightbox-title"></h3>
+            <p id="lightbox-desc"></p>
+        </div>
+        <button class="lightbox-nav next" onclick="nextImage()">›</button>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/gallery.js"></script>
+</body>
+</html>
